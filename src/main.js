@@ -1,13 +1,9 @@
 import './style.css'
 import Player from './player.js';
+import Game from './game.js';
 
 const entryPlayer = document.getElementById("enterPlayers");
 const gameBoard = document.getElementById("mainGame");
-
-const firstPlayer = document.getElementById("firstPlayerName");
-const firstPlayerSymbol = document.getElementById("firstPlayerSymbol");
-const secondPlayer = document.getElementById("secondPlayerName");
-const secondPlayerSymbol = document.getElementById("secondPlayerSymbol");
 
 const playBtn = document.getElementById("play");
 const resetBtn = document.getElementById("reset");
@@ -24,7 +20,12 @@ function changeAnimation(first, second){
 }
 
 playBtn.addEventListener("click", () => {
-  if(firstPlayer.value === "" || secondPlayer.value === "" || firstPlayerSymbol.value === secondPlayerSymbol.value){
+  const firstPlayer = document.getElementById("firstPlayerName").value;
+  const secondPlayer = document.getElementById("secondPlayerName").value;
+  const firstPlayerSymbol = document.getElementById("firstPlayerSymbol").value;
+  const secondPlayerSymbol = document.getElementById("secondPlayerSymbol").value;
+
+  if(firstPlayer === "" || secondPlayer === "" || firstPlayerSymbol === secondPlayerSymbol){
     entryError.classList.remove("hidden");
     setTimeout(() => {
       entryError.classList.add("hidden");
@@ -37,16 +38,13 @@ playBtn.addEventListener("click", () => {
   const player1 = new Player(firstPlayer, firstPlayerSymbol);
   const player2 = new Player(secondPlayer, secondPlayerSymbol);
 
-  const playerList = [player1, player2]
-
-  
+  const game = new Game(player1, player2);
+  game.start();
 });
 
 resetBtn.addEventListener("click", () => {
   changeAnimation(gameBoard, entryPlayer);
 
-  firstPlayer.value = "";
-  secondPlayer.value = "";
-  firstPlayerSymbol.selectedIndex = 0;
-  secondPlayerSymbol.selectedIndex = 0;
+  const game = new Game();
+  game.stop();
 });
