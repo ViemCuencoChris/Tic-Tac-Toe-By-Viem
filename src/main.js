@@ -1,4 +1,5 @@
 import './style.css'
+import Player from './player.js';
 
 const entryPlayer = document.getElementById("enterPlayers");
 const gameBoard = document.getElementById("mainGame");
@@ -32,6 +33,13 @@ playBtn.addEventListener("click", () => {
   }
 
   changeAnimation(entryPlayer, gameBoard);
+
+  const player1 = new Player(firstPlayer, firstPlayerSymbol);
+  const player2 = new Player(secondPlayer, secondPlayerSymbol);
+
+  const playerList = [player1, player2]
+
+  
 });
 
 resetBtn.addEventListener("click", () => {
