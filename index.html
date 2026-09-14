@@ -12,7 +12,7 @@
     <div class="bg-[#343434] w-full px-4 py-8 rounded-2xl flex flex-col gap-6 ring-1 ring-[#F0F4EF]">
       <div class="flex flex-col justify-center items-center gap-4">
         <label class="text-xl text-[#F0F4EF] tracking-wider" for="firstPlayerName">First Player Name</label>
-        <input class="bg-[#7A7777] text-[#BFCC94] rounded-2xl outline-none border border-4 border-[#0D1821] p-2" type="text" id="firstPlayerName" name="firstPlayerName">
+        <input class="bg-[#7A7777] text-[#F0F4EF] rounded-2xl outline-none border border-4 border-[#0D1821] p-2" type="text" id="firstPlayerName" name="firstPlayerName">
         <select class="appearance-base-select outline-none bg-[#0D1821] rounded-2xl ring-1 ring-[#F0F4EF] px-4 text-[#F0F4EF] cursor-pointer" name="firstPlayerSymbol" id="firstPlayerSymbol">
           <option value="X">X</option>
           <option value="O">O</option>
@@ -20,7 +20,7 @@
       </div>
       <div class="flex flex-col justify-center items-center gap-4">
         <label class="text-xl text-[#F0F4EF] tracking-wider" for="secondPlayerName">Second Player Name</label>
-        <input class="bg-[#7A7777] text-[#BFCC94] rounded-2xl outline-none border border-4 border-[#0D1821] p-2" type="text" id="secondPlayerName" name="secondPlayerName">
+        <input class="bg-[#7A7777] text-[#F0F4EF] rounded-2xl outline-none border border-4 border-[#0D1821] p-2" type="text" id="secondPlayerName" name="secondPlayerName">
         <select class="appearance-base-select outline-none bg-[#0D1821] rounded-2xl ring-1 ring-[#F0F4EF] px-4 text-[#F0F4EF] cursor-pointer" name="secondPlayerSymbol" id="secondPlayerSymbol">
           <option value="O">O</option>
           <option value="X">X</option>
@@ -45,6 +45,10 @@
     <div class="tile bg-[#7A7777] aspect-square w-full rounded-2xl flex justify-center items-center font-bold text-2xl cursor-pointer"></div>
     <div class="tile bg-[#7A7777] aspect-square w-full rounded-2xl flex justify-center items-center font-bold text-2xl cursor-pointer"></div>
     <button class="col-start-2 bg-[linear-gradient(120deg,#C1292E_50%,#BFCC94_50%)] rounded-2xl text-lg text-[#F0F4EF] font-bold p-2 mt-2 cursor-pointer" id="reset">Reset</button>
+  </div>
+
+  <div class="hidden opacity-0 absolute w-full max-w-70 p-8 bg-[#0b1b27] rounded-3xl border border-2 text-xl text-center text-[#F0F4EF] font-semibold transition-opacity duration-300 ease" id="winnerContainer">
+    The winner is<br><span id="winner"></span>
   </div>
 
   <script type="module" src="src/main.js"></script>

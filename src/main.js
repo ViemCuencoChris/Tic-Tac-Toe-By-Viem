@@ -11,6 +11,16 @@ const entryError = document.getElementById("errorA");
 const tiles = document.querySelectorAll(".tile");
 const current = document.getElementById("currentPlayer");
 
+const displayWinner = document.getElementById("winnerContainer");
+const winnerName = document.getElementById("winner");
+
+let tileArray = [];
+let first;
+let second;
+let firstSymbol;
+let secondSymbol;
+let currentPlayer;
+
 const winningCombinations = [
     [0, 1, 2],
     [3, 4, 5],
@@ -31,28 +41,80 @@ function changeAnimation(first, second){
   }, 1000);
 }
 
-function winner(tileArray){
-    let winner;
+function displayWinnerAnimation(symbol, name){
+  if(symbol === "X"){
+    displayWinner.style.borderColor = (currentPlayer === firstSymbol) ? "#BFCC94" : "#C1292E";
+    winnerName.textContent = name;
+    winnerName.style.color = (currentPlayer === firstSymbol) ? "#BFCC94" : "#C1292E";
+  } else if (symbol === "O") {
+    displayWinner.style.borderColor = (currentPlayer === firstSymbol) ? "#BFCC94" : "#C1292E";
+    winnerName.textContent = name;
+    winnerName.style.color = (currentPlayer === firstSymbol) ? "#BFCC94" : "#C1292E";
+  } else {
+    displayWinner.style.borderColor = "#F0F4EF";
+    winnerName.style.color = "#F0F4EF";
+    winnerName.textContent = "DRAW";
+  }
 
-    winningCombinations.forEach(index => {
-        const first = tileArray[index[0]].textContent;
-        const second = tileArray[index[1]].textContent;
-        const third = tileArray[index[2]].textContent;
-        
-        if(first !== "" && second !== "" && third !== ""){
-            if(first === second && second === third){
-                if(first === "X"){
-                    winner = "X";
-                    return;
+  displayWinner.classList.remove("hidden");
+  displayWinner.style.opacity = "100";
+  setTimeout(() => {
+    displayWinner.style.opacity = "";
+    reset();
+    changeAnimation(gameBoard, entryPlayer);
+    displayWinner.classList.add("hidden");
+  }, 1500);
+}
+
+function winner(){
+  let stop;
+
+  winningCombinations.forEach(index => {
+      const firstIndex = tileArray[index[0]].textContent;
+      const secondIndex = tileArray[index[1]].textContent;
+      const thirdIndex = tileArray[index[2]].textContent;
+      
+      if(firstIndex !== "" && secondIndex !== "" && thirdIndex !== ""){
+          if(firstIndex === secondIndex && secondIndex === thirdIndex){
+              if(firstIndex === "X"){
+                if(firstSymbol === firstIndex){
+                  displayWinnerAnimation(firstSymbol, first);
+                  stop = true;
+                  return;
                 } else {
-                    winner = "O";
-                    return;
+                  displayWinnerAnimation(secondSymbol, second);
+                  stop = true;
+                  return;
                 }
-            }
-        }
+              } 
+              
+              if(firstIndex === "O") {
+                if(firstSymbol === firstIndex){
+                  displayWinnerAnimation(firstSymbol, first);
+                  stop = true;
+                  return;
+                } else {
+                  displayWinnerAnimation(secondSymbol, second);
+                  stop = true;
+                  return;
+                }
+              }
+          }
+      }
+  });
+
+  if(stop != true){
+    const draw = tileArray.every(slot => {
+      return slot.textContent !== ""
     });
 
-    return winner;
+    if(draw){
+      stop = true;
+      displayWinnerAnimation("", "");
+    }
+  }
+
+  return stop;
 }
 
 function play(){
@@ -71,10 +133,11 @@ function play(){
 
   const player1 = [firstPlayer, firstPlayerSymbol];
   const player2 = [secondPlayer, secondPlayerSymbol];
-  const playerList =[player1, player2];
 
-  firstSymbol = playerList[0][1];
-  secondSymbol  = playerList[1][1];
+  first = player1[0];
+  second = player2[0];
+  firstSymbol = player1[1];
+  secondSymbol  = player2[1];
   currentPlayer = firstSymbol;
 
   current.textContent = "Turn for " + currentPlayer;
@@ -110,11 +173,6 @@ resetBtn.addEventListener("click", () => {
   reset();
 });
 
-let tileArray = [];
-let firstSymbol;
-let secondSymbol;
-let currentPlayer;
-
 tiles.forEach(tile => {
     tileArray.push(tile);
 
@@ -123,31 +181,13 @@ tiles.forEach(tile => {
             return;
         }
 
-        if(currentPlayer === "X"){
-            tile.style.color = "#BFCC94";
-        } if(currentPlayer === "O"){
-            tile.style.color = "#C1292E";
-        }
-        
+        tile.style.color = (currentPlayer === firstSymbol) ? "#BFCC94" : "#C1292E";;
         tile.textContent = currentPlayer;
 
-        const win = winner(tileArray);
+        let end = winner();
 
-        if(win === "X"){
-            console.log("X won");
-            return;
-        } else if(win === "O"){
-            console.log("O won");
-            return;
-        } else {
-            const draw = tileArray.every(tile => {
-                return tile.textContent !== ""
-            });
-
-            if(draw){
-                console.log("Draw");
-                return;
-            }
+        if(end){
+          return;
         }
 
         currentPlayer = (currentPlayer === firstSymbol) ? secondSymbol : firstSymbol;
