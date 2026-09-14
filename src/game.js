@@ -1,4 +1,5 @@
-const tiles = document.querySelectorAll('.tile');
+const tiles = document.querySelectorAll(".tile");
+const current = document.getElementById("currentPlayer");
 
 const tileArray = [];
 const winningCombinations = [
@@ -22,8 +23,13 @@ function winner(tileArray){
         
         if(first !== "" && second !== "" && third !== ""){
             if(first === second && second === third){
-                winner = first;
-                return;
+                if(first === "X"){
+                    winner = "X";
+                    return;
+                } else {
+                    winner = "O";
+                    return;
+                }
             }
         }
     });
@@ -37,9 +43,11 @@ export default class Game {
     }
     
     start(){
-        let firstSymbol = this.player[0].symbol;
-        let secondSymbol  = this.player[1].symbol;
+        let firstSymbol = this.player[0][1];
+        let secondSymbol  = this.player[1][1];
         let currentPlayer = firstSymbol;
+        current.textContent = "Turn for " + currentPlayer;
+        (currentPlayer === firstSymbol) ?  current.style.color = "#BFCC94" : current.style.color = "#C1292E";
 
         tiles.forEach(tile => {
             tileArray.push(tile);
@@ -57,9 +65,28 @@ export default class Game {
                 
                 tile.textContent = currentPlayer;
 
-                let win = winner(tileArray);
+                const win = winner(tileArray);
+
+                if(win === "X"){
+                    console.log("X won");
+                    return;
+                } else if(win === "O"){
+                    console.log("O won");
+                    return;
+                } else {
+                    const draw = tileArray.every(tile => {
+                        return tile.textContent !== ""
+                    });
+
+                    if(draw){
+                        console.log("Draw");
+                        return;
+                    }
+                }
 
                 currentPlayer = (currentPlayer === firstSymbol) ? secondSymbol : firstSymbol;
+                current.textContent = "Turn for " + currentPlayer;
+                (currentPlayer === firstSymbol) ?  current.style.color = "#BFCC94" : current.style.color = "#C1292E";
             });
         });
     }
@@ -68,5 +95,6 @@ export default class Game {
         tiles.forEach(tile => {
             tile.textContent = "";
         });
+        this.player.length = 0;
     }
 }

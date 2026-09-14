@@ -1,5 +1,4 @@
 import './style.css'
-import Player from './player.js';
 import Game from './game.js';
 
 const entryPlayer = document.getElementById("enterPlayers");
@@ -19,32 +18,45 @@ function changeAnimation(first, second){
   }, 1000);
 }
 
-playBtn.addEventListener("click", () => {
+function getPlayer(){
   const firstPlayer = document.getElementById("firstPlayerName").value;
   const secondPlayer = document.getElementById("secondPlayerName").value;
   const firstPlayerSymbol = document.getElementById("firstPlayerSymbol").value;
   const secondPlayerSymbol = document.getElementById("secondPlayerSymbol").value;
-
+  
   if(firstPlayer === "" || secondPlayer === "" || firstPlayerSymbol === secondPlayerSymbol){
     entryError.classList.remove("hidden");
     setTimeout(() => {
       entryError.classList.add("hidden");
   }, 1000);
+    return false;
+  }
+
+  const player1 = [firstPlayer, firstPlayerSymbol];
+  const player2 = [secondPlayer, secondPlayerSymbol];
+
+  const game = new Game(player1, player2);
+
+  return game;
+}
+
+playBtn.addEventListener("click", () => {
+  const game = getPlayer();
+
+  if(!game){
     return;
   }
 
   changeAnimation(entryPlayer, gameBoard);
 
-  const player1 = new Player(firstPlayer, firstPlayerSymbol);
-  const player2 = new Player(secondPlayer, secondPlayerSymbol);
 
-  const game = new Game(player1, player2);
   game.start();
 });
 
 resetBtn.addEventListener("click", () => {
+  const game = getPlayer();
+
   changeAnimation(gameBoard, entryPlayer);
 
-  const game = new Game();
   game.stop();
 });
