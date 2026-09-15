@@ -12,7 +12,6 @@ const tiles = document.querySelectorAll(".tile");
 const current = document.getElementById("currentPlayer");
 
 const displayWinner = document.getElementById("winnerContainer");
-const winnerName = document.getElementById("winner");
 
 let tileArray = [];
 let first;
@@ -67,16 +66,16 @@ function changeAnimation(first, second){
 function displayWinnerAnimation(symbol, name){
   if(symbol === "X"){
     displayWinner.style.borderColor = (currentPlayer === firstSymbol) ? "#BFCC94" : "#C1292E";
-    winnerName.textContent = name;
-    winnerName.style.color = (currentPlayer === firstSymbol) ? "#BFCC94" : "#C1292E";
+    displayWinner.textContent = name + " won";
+    displayWinner.style.color = (currentPlayer === firstSymbol) ? "#BFCC94" : "#C1292E";
   } else if (symbol === "O") {
     displayWinner.style.borderColor = (currentPlayer === firstSymbol) ? "#BFCC94" : "#C1292E";
-    winnerName.textContent = name;
-    winnerName.style.color = (currentPlayer === firstSymbol) ? "#BFCC94" : "#C1292E";
+    displayWinner.textContent = name + " won";
+    displayWinner.style.color = (currentPlayer === firstSymbol) ? "#BFCC94" : "#C1292E";
   } else {
     displayWinner.style.borderColor = "#F0F4EF";
-    winnerName.style.color = "#F0F4EF";
-    winnerName.textContent = "DRAW";
+    displayWinner.textContent = "DRAW";
+    displayWinner.style.color = "#F0F4EF";
   }
 
   displayWinner.classList.remove("hidden");
