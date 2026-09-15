@@ -40,7 +40,7 @@ tiles.forEach(tile => {
 
     currentPlayer = (currentPlayer === firstSymbol) ? secondSymbol : firstSymbol;
     current.textContent = "Turn for " + currentPlayer;
-    current.style.color = (currentPlayer === firstSymbol) ? "#BFCC94" :"#C1292E";
+    current.style.color = (currentPlayer === firstSymbol) ? "#BFCC94" : "#C1292E";
   });
 });
 
