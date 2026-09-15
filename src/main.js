@@ -21,6 +21,29 @@ let firstSymbol;
 let secondSymbol;
 let currentPlayer;
 
+tiles.forEach(tile => {
+  tileArray.push(tile);
+
+  tile.addEventListener("click", () => {
+    if(tile.textContent !== ""){
+        return;
+    }
+
+    tile.style.color = (currentPlayer === firstSymbol) ? "#BFCC94" : "#C1292E";;
+    tile.textContent = currentPlayer;
+
+    let end = winner();
+
+    if(end){
+      return;
+    }
+
+    currentPlayer = (currentPlayer === firstSymbol) ? secondSymbol : firstSymbol;
+    current.textContent = "Turn for " + currentPlayer;
+    current.style.color = (currentPlayer === firstSymbol) ? "#BFCC94" :"#C1292E";
+  });
+});
+
 const winningCombinations = [
     [0, 1, 2],
     [3, 4, 5],
@@ -171,27 +194,4 @@ resetBtn.addEventListener("click", () => {
   changeAnimation(gameBoard, entryPlayer);
 
   reset();
-});
-
-tiles.forEach(tile => {
-    tileArray.push(tile);
-
-    tile.addEventListener("click", () => {
-        if(tile.textContent !== ""){
-            return;
-        }
-
-        tile.style.color = (currentPlayer === firstSymbol) ? "#BFCC94" : "#C1292E";;
-        tile.textContent = currentPlayer;
-
-        let end = winner();
-
-        if(end){
-          return;
-        }
-
-        currentPlayer = (currentPlayer === firstSymbol) ? secondSymbol : firstSymbol;
-        current.textContent = "Turn for " + currentPlayer;
-        (currentPlayer === firstSymbol) ?  current.style.color = "#BFCC94" : current.style.color = "#C1292E";
-    });
 });
