@@ -93,37 +93,23 @@ function winner(){
   let stop;
 
   winningCombinations.forEach(index => {
-      const firstIndex = tileArray[index[0]].textContent;
-      const secondIndex = tileArray[index[1]].textContent;
-      const thirdIndex = tileArray[index[2]].textContent;
-      
-      if(firstIndex !== "" && secondIndex !== "" && thirdIndex !== ""){
-          if(firstIndex === secondIndex && secondIndex === thirdIndex){
-              if(firstIndex === "X"){
-                if(firstSymbol === firstIndex){
-                  displayWinnerAnimation(firstSymbol, first);
-                  stop = true;
-                  return;
-                } else {
-                  displayWinnerAnimation(secondSymbol, second);
-                  stop = true;
-                  return;
-                }
-              } 
-              
-              if(firstIndex === "O") {
-                if(firstSymbol === firstIndex){
-                  displayWinnerAnimation(firstSymbol, first);
-                  stop = true;
-                  return;
-                } else {
-                  displayWinnerAnimation(secondSymbol, second);
-                  stop = true;
-                  return;
-                }
-              }
-          }
+    const firstIndex = tileArray[index[0]].textContent;
+    const secondIndex = tileArray[index[1]].textContent;
+    const thirdIndex = tileArray[index[2]].textContent;
+    
+    if(firstIndex !== "" && secondIndex !== "" && thirdIndex !== ""){
+      if(firstIndex === secondIndex && secondIndex === thirdIndex){
+        if(firstSymbol === firstIndex){
+          displayWinnerAnimation(firstSymbol, first);
+          stop = true;
+          return;
+        } else {
+          displayWinnerAnimation(secondSymbol, second);
+          stop = true;
+          return;
+        }
       }
+    }
   });
 
   if(stop != true){
@@ -164,7 +150,7 @@ function play(){
   currentPlayer = firstSymbol;
 
   current.textContent = "Turn for " + currentPlayer;
-  (currentPlayer === firstSymbol) ?  current.style.color = "#BFCC94" : current.style.color = "#C1292E";
+  current.style.color = (currentPlayer === firstSymbol) ? "#BFCC94" : "#C1292E";
 }
 
 function reset(){
